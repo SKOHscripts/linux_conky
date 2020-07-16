@@ -7,7 +7,7 @@ conky.config = {
 
 
 	
-	update_interval = 1,
+	update_interval = 0.5,
 	cpu_avg_samples = 1,
 	net_avg_samples = 1,
 	out_to_console = false,
@@ -21,11 +21,11 @@ conky.config = {
 
 
 	own_window = true,
-	own_window_transparent = no,
+	own_window_transparent = true,
     own_window_class = 'conky',
     own_window_type = 'dock',
 	own_window_argb_visual = true,
-	own_window_argb_value = 0,
+	own_window_argb_value = 200,
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
 	border_inner_margin = 5,
