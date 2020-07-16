@@ -25,7 +25,7 @@ conky.config = {
     own_window_class = 'conky',
     own_window_type = 'dock',
 	own_window_argb_visual = true,
-	own_window_argb_value = 200,
+	own_window_argb_value = 500,
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
 	border_inner_margin = 5,
