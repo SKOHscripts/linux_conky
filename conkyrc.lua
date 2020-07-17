@@ -33,7 +33,7 @@ conky.config = {
 	xinerama_head = 1,
 	alignment = 'top_right',
 	gap_x = 20,
-	gap_y = 65,
+	gap_y = 72,
 
 
 	draw_shades = false,
@@ -86,7 +86,6 @@ ${if_match ${battery_percent BAT0}<=20}${color b54}${battery_bar 7}\
 ${else}${if_match ${battery_percent BAT0} ==100}${color2}${battery_bar 7}${endif}\
 ${battery_bar 7}
 ${endif}#
-
 
 ${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
