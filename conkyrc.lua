@@ -53,7 +53,7 @@ conky.config = {
 
 
 	template5 = [[
-${if_mounted \2}
+${if_mounted \2}#
 ${font Ubuntu:pixelsize=11:bold}${color0}· \1 · $alignc${color1}${font Ubuntu:pixelsize=10}${fs_used \2}  /  ${fs_size \2}#
 ${if_match ${fs_used_perc \2}>=75}${color b54}$else$color$endif#
 ${template8}${fs_used_perc \2}%$font$color
