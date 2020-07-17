@@ -51,48 +51,81 @@ conky.config = {
 	minimum_width = 300, minimum_height = 0,
 	alignment = 'top_right',
 
+
+	template5 = [[
+${if_mounted \2}
+${font Ubuntu:pixelsize=11:bold}${color0}· \1 · $alignc${color1}${font Ubuntu:pixelsize=10}${fs_used \2}  /  ${fs_size \2}#
+${if_match ${fs_used_perc \2}>=75}${color b54}$else$color$endif#
+${template8}${fs_used_perc \2}%$font$color
+${if_match ${fs_used_perc \2}>=75}${color b54}$else$color$endif#
+${fs_bar 7 \2}
+$endif$color]],
+
+
+	
+	color1 = 'b9b9b7', -- secondary text color
+	color2 = '007800',
+	template7 = '${alignc}',
+    template8 = '${alignr 10}',
+
 };
 conky.text = [[
 ${font}${voffset -15}
-${color darkred}${font sans-serif:bold:size=14}SYSTEM  ${hr 3 }$color
-${font sans-serif:normal:size=10}${exec lsb_release -d | cut -f2 } 
-#$alignr${font sans-serif:bold:size=13}${execi 1000 date "+%d %B"}  ${exec date "+%H:%M"}
-${font sans-serif:normal:size=10}Host: $alignr$nodename
-Uptime: $uptime_short
-${exec acpi -b | grep "Battery 0" | awk '{ print "State : " $3 "  Capacity : "$4 "  (" $5 ")"}'}
+${color darkred}${font Ubuntu:pixelsize=20:bold}SYSTEM  ${hr 3 }$color
+${font Ubuntu:pixelsize=13:bold}${exec lsb_release -d | cut -f2 }
+#${template8}${font Ubuntu:pixelsize=17:bold}${execi 1000 date "+%d %B"}  ${exec date "+%H:%M"}
+${font Ubuntu:pixelsize=13:bold}Host: $alignr$nodename
+${font Ubuntu:pixelsize=13:bold}Uptime: ${font Ubuntu:pixelsize=13:normal}$uptime_short
 
-${color darkred}${font sans-serif:bold:size=14}CPU  ${hr 3}$color
-${font sans-serif:normal:size=10}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
-${font sans-serif:normal:size=10}${cpugraph 50,300 000000 ffffff cpu}
-${cpu cpu0}%${goto 50}${cpubar cpu0 7,80} $alignr${cpu cpu1}%   ${cpubar cpu1 7,80}
-${cpu cpu2}%${goto 50}${cpubar cpu2 7,80} $alignr${cpu cpu3}%   ${cpubar cpu3 7,80}
-${freq_g}GHz $alignr${exec sensors | grep 'Core 0' | cut -c17-18}°C
+${font Ubuntu:pixelsize=11:bold}${color0}· BATTERY · $alignc${color1}${font Ubuntu:pixelsize=10}${battery_time}#
+${if_match ${battery_percent BAT0}<=20}${color b54}\
+${else}${if_match ${battery_percent BAT0} ==100}${color2}${endif}\
+${endif}#
+${template8}${battery_percent}%$font$color
+${if_match ${battery_percent BAT0}<=20}${color b54}${battery_bar 7}\
+${else}${if_match ${battery_percent BAT0} ==100}${color2}${battery_bar 7}${endif}\
+${battery_bar 7}
+${endif}#
 
-${color darkred}${font sans-serif:bold:size=14}MEMORY  ${hr 3}$color
-${font sans-serif:normal:size=10}RAM $alignc $mem / $memmax $alignr $memperc%
+
+${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
+${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
+${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 000000 ffffff cpu}
+${font Ubuntu:pixelsize=11:bold}${cpu cpu0}%${goto 50}${cpubar cpu0 7,80} $alignr${cpu cpu1}%   ${cpubar cpu1 7,80}
+${font Ubuntu:pixelsize=11:bold}${cpu cpu2}%${goto 50}${cpubar cpu2 7,80} $alignr${cpu cpu3}%   ${cpubar cpu3 7,80}
+${freq_g}GHz ${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color$endif#
+${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C
+
+${color darkred}${font Ubuntu:pixelsize=20:bold}MEMORY  ${hr 3}$color
+${font Ubuntu:pixelsize=11:bold}${color0}· RAM · $alignc${color1}${font Ubuntu:pixelsize=10}$mem / $memmax#
+${if_match ${memperc}>=75}${color b54}$else$color$endif#
+${template8}${memperc}%$font$color
+${if_match ${memperc}>=75}${color b54}$else$color$endif#
 ${membar 7}
-SWAP $alignc ${swap} / ${swapmax} $alignr ${swapperc}%
+
+${font Ubuntu:pixelsize=11:bold}${color0}· SWAP · $alignc${color1}${font Ubuntu:pixelsize=10}$swap / $swapmax#
+${if_match ${swapperc}>=75}${color b54}$else$color$endif#
+${template8}${swapperc}%$font$color
+${if_match ${swapperc}>=75}${color b54}$else$color$endif#
 ${swapbar 7}
 
-${color darkred}${font sans-serif:bold:size=14}DISK USAGE  ${hr 3}$color
-${font sans-serif:normal:size=10}/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
-${fs_bar 7 /}
-${font sans-serif:normal:size=10}BACKUP_DISK $alignc ${fs_used /media/corentin/BACKUP_DISK} / ${fs_size /media/corentin/BACKUP_DISK} $alignr ${fs_used_perc /media/corentin/BACKUP_DISK}%
-${fs_bar 7 /media/corentin/BACKUP_DISK}
-${font sans-serif:normal:size=10}USB_MICHELC $alignc ${fs_used /media/corentin/USB_MICHELC} / ${fs_size /media/corentin/USB_MICHELC} $alignr ${fs_used_perc /media/corentin/USB_MICHELC}%
-${fs_bar 7 /media/corentin/USB_MICHELC}
-Temperature: ${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}°C
+${color darkred}${font Ubuntu:pixelsize=20:bold}DISK USAGE  ${hr 3}$color
+${template5 / /}#
+${template5 BACKUP_DISK /media/corentin/BACKUP_DISK}#
+${template5 USB_MICHELC /media/corentin/USB_MICHELC}#
+${font Ubuntu:pixelsize=11:bold}Temperature: ${if_match ${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}>=50}${color b54}$else$color$endif#
+${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}°C
 
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
-${font sans-serif:normal:size=10}Local IPs:$alignr ${execi 120 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}
-External IP:${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
-${font sans-serif:normal:size=10}WIFI : Down: ${downspeed wlo1}  ${alignr}Up: ${upspeed wlo1}
-${font sans-serif:normal:size=7}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
+${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${execi 120 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}
+${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
+${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
+${font Ubuntu:pixelsize=13:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
 #${font sans-serif:normal:size=7}${execi 1200  sudo protonvpn -f c | tail -n2}
 
 ${downspeedgraph wlo1 60,150 000000 ffffff} ${alignr}${upspeedgraph wlo1 60,150 000000 ffffff}
-${color darkred}${font sans-serif:bold:size=14}TOP PROCESSES  ${hr 3}$color
-${font sans-serif:bold:size=10}NAME $alignr PID    CPU    MEM ${font sans-serif:normal:size=10}
+${color darkred}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
+${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
 ${top name 2} $alignr ${top pid 2} ${top cpu 2}% ${top mem 2}%
 ${top name 3} $alignr ${top pid 3} ${top cpu 3}% ${top mem 3}%
@@ -103,4 +136,5 @@ ${top name 7} $alignr ${top pid 7} ${top cpu 7}% ${top mem 7}%
 ${top name 8} $alignr ${top pid 8} ${top cpu 8}% ${top mem 8}%
 ${top name 9} $alignr ${top pid 9} ${top cpu 9}% ${top mem 9}%
 ${top name 10} $alignr ${top pid 10} ${top cpu 10}% ${top mem 10}%
+
 ]];
