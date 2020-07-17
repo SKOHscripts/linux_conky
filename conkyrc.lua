@@ -33,7 +33,7 @@ conky.config = {
 	xinerama_head = 1,
 	alignment = 'top_right',
 	gap_x = 20,
-	gap_y = 72,
+	gap_y = 65,
 
 
 	draw_shades = false,
@@ -119,7 +119,7 @@ ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${execi 120 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}
 ${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
-${font Ubuntu:pixelsize=13:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
+${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
 #${font sans-serif:normal:size=7}${execi 1200  sudo protonvpn -f c | tail -n2}
 
 ${downspeedgraph wlo1 60,150 000000 ffffff} ${alignr}${upspeedgraph wlo1 60,150 000000 ffffff}
