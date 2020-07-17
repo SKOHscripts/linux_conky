@@ -64,7 +64,7 @@ $endif$color]],
 
 	
 	color1 = 'b9b9b7', -- secondary text color
-	color2 = '3a9835',
+	color2 = '2e7629',
 	template7 = '${alignc}',
     template8 = '${alignr 10}',
 
