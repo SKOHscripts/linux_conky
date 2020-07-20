@@ -11,7 +11,6 @@ conky.config = {
 	cpu_avg_samples = 1,
 	net_avg_samples = 1,
 	out_to_console = false,
-	on_bottom = true,
 
 	override_utf8_locale = true,
 	double_buffer = true,
@@ -89,7 +88,7 @@ ${endif}#
 
 ${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
-${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 000000 ffffff cpu}
+${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 4c4c4c a9a9a9 cpu}
 ${font Ubuntu:pixelsize=11:bold}${cpu cpu0}%${goto 50}${cpubar cpu0 7,80} $alignr${cpu cpu1}%   ${cpubar cpu1 7,80}
 ${font Ubuntu:pixelsize=11:bold}${cpu cpu2}%${goto 50}${cpubar cpu2 7,80} $alignr${cpu cpu3}%   ${cpubar cpu3 7,80}
 ${freq_g}GHz ${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color$endif#
@@ -122,7 +121,7 @@ ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}$
 ${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
 #${font sans-serif:normal:size=7}${execi 1200  sudo protonvpn -f c | tail -n2}
 
-${downspeedgraph wlo1 60,150 000000 ffffff} ${alignr}${upspeedgraph wlo1 60,150 000000 ffffff}
+${downspeedgraph wlo1 60,150 4c4c4c a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 4c4c4c a9a9a9}
 ${color darkred}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
 ${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
