@@ -64,6 +64,7 @@ $endif$color]],
 	
 	color1 = 'b9b9b7', -- secondary text color
 	color2 = '2e7629',
+	color3 = 'ccccca',
 	template7 = '${alignc}',
     template8 = '${alignr 10}',
 
@@ -89,10 +90,12 @@ ${endif}#
 ${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
 ${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 4c4c4c a9a9a9 cpu}
-${font Ubuntu:pixelsize=11:bold}${cpu cpu0}%${goto 50}${cpubar cpu0 7,80} $alignr${cpu cpu1}%   ${cpubar cpu1 7,80}
-${font Ubuntu:pixelsize=11:bold}${cpu cpu2}%${goto 50}${cpubar cpu2 7,80} $alignr${cpu cpu3}%   ${cpubar cpu3 7,80}
-${freq_g}GHz ${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color$endif#
-${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C
+$color3${voffset -47}${font Ubuntu:pixelsize=11:bold}${freq_g}Ghz$alignc${cpu cpu}%${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color3$endif#
+${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C$color
+
+
+${font Ubuntu:pixelsize=11:bold}${cpu cpu1}%${goto 50}${cpubar cpu1 7,80} $alignr${cpu cpu2}%   ${cpubar cpu2 7,80}
+${font Ubuntu:pixelsize=11:bold}${cpu cpu3}%${goto 50}${cpubar cpu3 7,80} $alignr${cpu cpu4}%   ${cpubar cpu4 7,80}
 
 ${color darkred}${font Ubuntu:pixelsize=20:bold}MEMORY  ${hr 3}$color
 ${font Ubuntu:pixelsize=11:bold}${color0}· RAM · $alignc${color1}${font Ubuntu:pixelsize=10}$mem / $memmax#
@@ -115,12 +118,10 @@ ${font Ubuntu:pixelsize=11:bold}Temperature: ${if_match ${execi 10 sudo nvme sma
 ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}°C
 
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
-${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${execi 120 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}
-${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
+${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}
+${if_gw}${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}${else}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
 ${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
-#${font sans-serif:normal:size=7}${execi 1200  sudo protonvpn -f c | tail -n2}
-
 ${downspeedgraph wlo1 60,150 4c4c4c a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 4c4c4c a9a9a9}
 ${color darkred}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
 ${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
@@ -134,5 +135,5 @@ ${top name 7} $alignr ${top pid 7} ${top cpu 7}% ${top mem 7}%
 ${top name 8} $alignr ${top pid 8} ${top cpu 8}% ${top mem 8}%
 ${top name 9} $alignr ${top pid 9} ${top cpu 9}% ${top mem 9}%
 ${top name 10} $alignr ${top pid 10} ${top cpu 10}% ${top mem 10}%
-
+${voffset -50}
 ]];
