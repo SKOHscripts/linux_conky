@@ -118,8 +118,11 @@ ${font Ubuntu:pixelsize=11:bold}Temperature: ${if_match ${execi 10 sudo nvme sma
 ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}°C
 
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
-${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}
-${if_gw}${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}${else}No Connection${endif}
+${if_gw}\
+${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
+${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}\
+${else}\
+${font Ubuntu:pixelsize=13:bold}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
 ${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
 ${downspeedgraph wlo1 60,150 4c4c4c a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 4c4c4c a9a9a9}
