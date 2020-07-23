@@ -32,7 +32,7 @@ conky.config = {
 	xinerama_head = 1,
 	alignment = 'top_right',
 	gap_x = 20,
-	gap_y = 65,
+	gap_y = 90,
 
 
 	draw_shades = false,
