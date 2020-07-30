@@ -24,7 +24,7 @@ conky.config = {
     own_window_class = 'conky',
     own_window_type = 'dock',
 	own_window_argb_visual = true,
-	own_window_argb_value = 500,
+	own_window_argb_value = 300,
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
 	border_inner_margin = 5,
@@ -41,7 +41,7 @@ conky.config = {
 	draw_graph_borders = false,
 	use_xft = true,
 	font = 'Ubuntu Mono:size=10',
-	xftalpha = 0,
+	xftalpha = 0.8,
 	uppercase = false,
 	default_color = 'darkgray',
 	default_shade_color = '#1d1d1d',
@@ -125,7 +125,7 @@ ${else}\
 ${font Ubuntu:pixelsize=13:bold}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
 ${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
-${downspeedgraph wlo1 60,150 4c4c4c a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 4c4c4c a9a9a9}
+${downspeedgraph wlo1 60,150 000000 a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 000000 a9a9a9}
 ${color darkred}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
 ${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
