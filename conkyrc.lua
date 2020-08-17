@@ -32,7 +32,7 @@ conky.config = {
 	xinerama_head = 1,
 	alignment = 'top_right',
 	gap_x = 20,
-	gap_y = 90,
+	gap_y = 60,
 
 
 	draw_shades = false,
@@ -45,6 +45,7 @@ conky.config = {
 	uppercase = false,
 	default_color = 'darkgray',
 	default_shade_color = '#1d1d1d',
+	white = '#000000',
 
 	own_window_colour = '#000000',
 	minimum_width = 300, minimum_height = 0,
@@ -53,7 +54,7 @@ conky.config = {
 
 	template5 = [[
 ${if_mounted \2}#
-${font Ubuntu:pixelsize=11:bold}${color0}· \1 · $alignc${color1}${font Ubuntu:pixelsize=10}${fs_used \2}  /  ${fs_size \2}#
+${font Ubuntu:pixelsize=11:bold}${color white}· \1 · $alignc${color1}${font Ubuntu:pixelsize=10}${fs_used \2}  /  ${fs_size \2}#
 ${if_match ${fs_used_perc \2}>=75}${color b54}$else$color$endif#
 ${template8}${fs_used_perc \2}%$font$color
 ${if_match ${fs_used_perc \2}>=75}${color b54}$else$color$endif#
@@ -119,6 +120,7 @@ ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor
 
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
 ${if_gw}\
+${font Ubuntu:pixelsize=13:bold}Name: ${font Ubuntu:pixelsize=11:normal}${wireless_essid} (${wireless_link_qual_perc wlo1})
 ${font Ubuntu:pixelsize=13:bold}External IP:${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
 ${font Ubuntu:pixelsize=13:bold}Local IPs:${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}\
 ${else}\
@@ -126,17 +128,19 @@ ${font Ubuntu:pixelsize=13:bold}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
 ${font Ubuntu:pixelsize=11:normal}${execi 60  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${execi 60 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
 ${downspeedgraph wlo1 60,150 000000 a9a9a9} ${alignr}${upspeedgraph wlo1 60,150 000000 a9a9a9}
+${font Ubuntu:pixelsize=13:bold}Today ${goto 180}Month
+${font Ubuntu:pixelsize=11:normal}${execi 300 vnstat -i wlo1+enp3s0 | grep "today" | awk '{print "R: "$2" "$3" / T: "$5" "$6}'} ${goto 180}${execi 300 vnstat -i wlo1+enp3s0 -m | grep "`date +"%Y-%m"`" | awk '{print "R:"$2" "$3" / T: "$5" "$6}'}
 ${color darkred}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
 ${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
-${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
-${top name 2} $alignr ${top pid 2} ${top cpu 2}% ${top mem 2}%
-${top name 3} $alignr ${top pid 3} ${top cpu 3}% ${top mem 3}%
-${top name 4} $alignr ${top pid 4} ${top cpu 4}% ${top mem 4}%
-${top name 5} $alignr ${top pid 5} ${top cpu 5}% ${top mem 5}%
-${top name 6} $alignr ${top pid 6} ${top cpu 6}% ${top mem 6}%
-${top name 7} $alignr ${top pid 7} ${top cpu 7}% ${top mem 7}%
-${top name 8} $alignr ${top pid 8} ${top cpu 8}% ${top mem 8}%
-${top name 9} $alignr ${top pid 9} ${top cpu 9}% ${top mem 9}%
-${top name 10} $alignr ${top pid 10} ${top cpu 10}% ${top mem 10}%
+1. ${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
+2. ${top name 2} $alignr ${top pid 2} ${top cpu 2}% ${top mem 2}%
+3. ${top name 3} $alignr ${top pid 3} ${top cpu 3}% ${top mem 3}%
+4. ${top name 4} $alignr ${top pid 4} ${top cpu 4}% ${top mem 4}%
+5. ${top name 5} $alignr ${top pid 5} ${top cpu 5}% ${top mem 5}%
+6. ${top name 6} $alignr ${top pid 6} ${top cpu 6}% ${top mem 6}%
+7. ${top name 7} $alignr ${top pid 7} ${top cpu 7}% ${top mem 7}%
+8. ${top name 8} $alignr ${top pid 8} ${top cpu 8}% ${top mem 8}%
+9. ${top name 9} $alignr ${top pid 9} ${top cpu 9}% ${top mem 9}%
+10. ${top name 10} $alignr ${top pid 10} ${top cpu 10}% ${top mem 10}%
 ${voffset -50}
 ]];
