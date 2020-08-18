@@ -7,6 +7,8 @@ You will first need to download the "conky" package and place the conkyrc file o
 <code>sudo apt install conky</code>
 To automate it, you will need to go to the "Startup applications" application. Then add the "conky" command.
 
+The "draw_bg.lua" file is there for background configurations because I wanted rounded corner for the conky window.
+
 And there, miraculously, the file runs on its own.
 
 **You will see**
