@@ -120,7 +120,7 @@ ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor
 
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
 ${if_gw}\
-${font Ubuntu:pixelsize=13:bold}Name : ${font Ubuntu:pixelsize=11:normal}${wireless_essid} (${wireless_link_qual_perc wlo1})
+${font Ubuntu:pixelsize=13:bold}Name : ${font Ubuntu:pixelsize=11:normal}${wireless_essid} (${wireless_link_qual_perc wlo1}%)
 ${font Ubuntu:pixelsize=13:bold}External IP :${font Ubuntu:pixelsize=13:normal}${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
 ${font Ubuntu:pixelsize=13:bold}Local IPs :${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}\
 ${else}\
