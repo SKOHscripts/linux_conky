@@ -7,7 +7,7 @@ conky.config = {
 
 
 	
-	update_interval = 1,
+	update_interval = 0.5,
 	cpu_avg_samples = 1,
 	net_avg_samples = 1,
 	out_to_console = false,
@@ -24,7 +24,7 @@ conky.config = {
     own_window_class = 'conky',
     own_window_type = 'dock',
 	own_window_argb_visual = true,
-	own_window_argb_value = 300,
+	own_window_argb_value = 255,
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
 	border_inner_margin = 5,
@@ -72,7 +72,7 @@ $endif$color]],
 };
 conky.text = [[
 ${font}${voffset -15}
-${color darkred}${font Ubuntu:pixelsize=20:bold}SYSTEM  ${hr 3 }$color
+${color darkred}${font Ubuntu:pixelsize=20:bold}SYSTEM  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${exec lsb_release -d | cut -f2 }
 #${template8}${font Ubuntu:pixelsize=17:bold}${execi 1000 date "+%d %B"}  ${exec date "+%H:%M"}
 ${font Ubuntu:pixelsize=13:bold}Host : $alignr$nodename
@@ -90,7 +90,7 @@ ${endif}#
 
 ${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
-${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 4c4c4c a9a9a9 cpu}
+${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 000000 a9a9a9 cpu}
 $color3${voffset -47}${font Ubuntu:pixelsize=11:bold}${freq_g}Ghz$alignc${cpu cpu}%${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color3$endif#
 ${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C$color
 
