@@ -1,6 +1,7 @@
 # my conky configuration
 
 ![Creative Commons](cc.png)
+
 Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
 Here is my "conkyrc" file that I use for my gnome desktop with Ubuntu. I gleaned information here and there to write it down.
