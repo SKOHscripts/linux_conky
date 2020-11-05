@@ -1,6 +1,6 @@
 conky.config = {
 
-	lua_load = "~/CloudStation/Documents/scripts/linux_conky/draw_bg.lua",
+	lua_load = "~/CloudStation/Documents/Scripts/linux_conky/draw_bg.lua",
     -- lua_startup_hook = "draw_bg",
     lua_draw_hook_pre = "draw_bg",
     -- lua_draw_hook_post = "conky_update",
@@ -32,7 +32,7 @@ conky.config = {
 	xinerama_head = 1,
 	alignment = 'top_right',
 	gap_x = 20,
-	gap_y = 60,
+	gap_y = 50,
 
 
 	draw_shades = false,
@@ -73,7 +73,7 @@ $endif$color]],
 conky.text = [[
 ${font}${voffset -15}
 ${color darkred}${font Ubuntu:pixelsize=20:bold}SYSTEM  ${hr 3}$color
-${font Ubuntu:pixelsize=13:bold}${exec lsb_release -d | cut -f2 }
+${font Ubuntu:pixelsize=13:bold}${exec lsb_release -d | cut -f2 }${template8} ${kernel}
 #${template8}${font Ubuntu:pixelsize=17:bold}${execi 1000 date "+%d %B"}  ${exec date "+%H:%M"}
 ${font Ubuntu:pixelsize=13:bold}Host : $alignr$nodename
 ${font Ubuntu:pixelsize=13:bold}Uptime : ${font Ubuntu:pixelsize=13:normal}$uptime_short
@@ -88,7 +88,7 @@ ${else}${if_match ${battery_percent BAT0} ==100}${color2}${battery_bar 7}${endif
 ${battery_bar 7}
 ${endif}#
 
-${color darkred}${font Ubuntu:pixelsize=20:bold}CPU  ${hr 3}$color
+${color darkred}${font Ubuntu:pixelsize=20:bold}CPU/GPU  ${hr 3}$color
 ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
 ${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 000000 a9a9a9 cpu}
 $color3${voffset -47}${font Ubuntu:pixelsize=11:bold}${freq_g}Ghz$alignc${cpu cpu}%${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color3$endif#
@@ -98,6 +98,10 @@ ${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C$color
 ${font Ubuntu:pixelsize=11:bold}${cpu cpu1}%${goto 50}${cpubar cpu1 7,80} $alignr${cpu cpu2}%   ${cpubar cpu2 7,80}
 ${font Ubuntu:pixelsize=11:bold}${cpu cpu3}%${goto 50}${cpubar cpu3 7,80} $alignr${cpu cpu4}%   ${cpubar cpu4 7,80}
 
+${font Ubuntu:pixelsize=13:bold}${execi 1000 nvidia-smi -q | grep "Product Name" | cut -c45-60}\
+${font Ubuntu:pixelsize=11:bold}$alignc${exec nvidia-smi -q | grep Gpu | cut -c45-46}%\
+${font Ubuntu:pixelsize=11:bold}${template8}${if_match ${nvidia temp}>=70}${color b54}$else$color$endif#
+${template8}${nvidia temp}°C
 ${color darkred}${font Ubuntu:pixelsize=20:bold}MEMORY  ${hr 3}$color
 ${font Ubuntu:pixelsize=11:bold}${color0}· RAM · $alignc${color1}${font Ubuntu:pixelsize=10}$mem / $memmax#
 ${if_match ${memperc}>=75}${color b54}$else$color$endif#
@@ -116,9 +120,8 @@ ${template5 / /}#
 ${template5 BACKUP_DISK /media/corentin/BACKUP_DISK}#
 ${template5 USB_MICHELC /media/corentin/USB_MICHELC}#
 ${template5 USB_31Go /media/corentin/USB_31Go}#
-${font Ubuntu:pixelsize=11:bold}Temperature: ${if_match ${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}>=50}${color b54}$else$color$endif#
-${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'Temperature Sensor' | cut -c39-40}°C
-
+${font Ubuntu:pixelsize=11:bold}${if_match ${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'temperature' | cut -c18-20}>=50}${color b54}$else$color$endif#
+${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'temperature' | cut -c18-20}°C
 ${color darkred}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
 ${if_gw}\
 ${font Ubuntu:pixelsize=13:bold}Name : ${font Ubuntu:pixelsize=11:normal}${wireless_essid} (${wireless_link_qual_perc wlo1}%)
