@@ -19,7 +19,7 @@ corner_r=25
 -- Set the colour and transparency (alpha) of your background.
 
 bg_colour=0x000000
-bg_alpha=0.6
+bg_alpha=0.7
 
 require 'cairo'
 function rgb_to_r_g_b(colour,alpha)
@@ -32,7 +32,7 @@ function conky_draw_bg()
     local h=conky_window.height
     local cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, w, h)
     cr=cairo_create(cs)
-   
+
     cairo_move_to(cr,corner_r,0)
     cairo_line_to(cr,w-corner_r,0)
     cairo_curve_to(cr,w,0,w,0,w,corner_r)
@@ -43,7 +43,7 @@ function conky_draw_bg()
     cairo_line_to(cr,0,corner_r)
     cairo_curve_to(cr,0,0,0,0,corner_r,0)
     cairo_close_path(cr)
-   
+
     cairo_set_source_rgba(cr,rgb_to_r_g_b(bg_colour,bg_alpha))
     cairo_fill(cr)
 end
