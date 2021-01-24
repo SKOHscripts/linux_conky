@@ -31,7 +31,7 @@ conky.config = {
 
   border_inner_margin = 5,
   border_outer_margin = 0,
-  xinerama_head = 0,
+  xinerama_head = 1,
   alignment = 'middle_right',
   gap_x = 20,
   gap_y = 0,
