@@ -126,13 +126,13 @@ ${font Ubuntu:pixelsize=11:bold}${if_match ${execi 10 sudo nvme smart-log /dev/n
 ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'temperature' | cut -c18-20}°C
 ${color4}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
 ${if_gw}\
-${font Ubuntu:pixelsize=13:bold}Name : ${font Ubuntu:pixelsize=11:normal}${wireless_essid wlo1} (${wireless_link_qual_perc wlo1}%)
-${font Ubuntu:pixelsize=13:bold}External IP :${font Ubuntu:pixelsize=13:normal}${alignr}${execi 30  wget -q -O- http://ipecho.net/plain; echo}
-${font Ubuntu:pixelsize=13:bold}Local IPs :${font Ubuntu:pixelsize=13:normal}$alignr ${addrs wlo1}\
+${font Ubuntu:pixelsize=13:bold}Name : ${font Ubuntu:pixelsize=11:normal}${alignc}${wireless_essid wlo1} (${wireless_link_qual_perc wlo1}%)
+${font Ubuntu:pixelsize=13:bold}External IP :${font Ubuntu:pixelsize=13:normal}${alignc}${execi 30  wget -q -O- http://ipecho.net/plain; echo}
+${font Ubuntu:pixelsize=13:bold}Local IPs :${font Ubuntu:pixelsize=13:normal}${alignc}${addrs wlo1}\
 ${else}\
 ${font Ubuntu:pixelsize=13:bold}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
-${font Ubuntu:pixelsize=13:bold}VPN : ${font Ubuntu:pixelsize=11:normal}${texeci 30  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${texeci 30 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '}
+${font Ubuntu:pixelsize=13:bold}VPN : ${font Ubuntu:pixelsize=11:normal}${texeci 30  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${texeci 30 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '} ${texeci 30 protonvpn s | awk '/Protocol/{print}' | cut -f2 -d ':' | tr -d ' '}
 ${downspeedgraph wlo1 40,140 A9A9A9} ${alignr}${upspeedgraph wlo1 40,140 A9A9A9}
 ${font Ubuntu:pixelsize=13:bold}Today ${goto 180}Month
 ${font Ubuntu:pixelsize=11:normal}${execi 300 vnstat -i wlo1+enp3s0 | grep "today" | awk '{print "R: "$2" "$3" / T: "$5" "$6}'} ${goto 180}${execi 300 vnstat -i wlo1+enp3s0 -m | grep "`date +"%Y-%m"`" | awk '{print "R:"$2" "$3" / T: "$5" "$6}'}
