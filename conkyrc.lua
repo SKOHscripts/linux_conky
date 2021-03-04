@@ -27,7 +27,7 @@ conky.config = {
   own_window_argb_value = 255,
   double_buffer = true,
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
-  xinerama_head = 1,
+  xinerama_head = 0,
 
   border_inner_margin = 5,
   border_outer_margin = 0,
