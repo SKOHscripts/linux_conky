@@ -27,7 +27,7 @@ conky.config = {
   own_window_argb_value = 255,
   double_buffer = true,
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
-  xinerama_head = 0,
+  xinerama_head = 1,
 
   border_inner_margin = 5,
   border_outer_margin = 0,
@@ -77,7 +77,8 @@ ${font}${voffset -15}
 
 ${template8}${font Ubuntu:pixelsize=17:bold}${execi 1000 date "+%d %B"}  ${exec date "+%H:%M"}
 ${color4}${font Ubuntu:pixelsize=20:bold}SYSTEM  ${hr 3}$color
-${font Ubuntu:pixelsize=13:bold}${exec lsb_release -d | cut -f2 }$alignr ${kernel}
+${font Ubuntu:pixelsize=13:bold}${execi 600 gnome-shell --version}$alignr ${kernel}
+${font Ubuntu:pixelsize=13:bold}$alignc${execi 600 lsb_release -d | cut -f2 }
 ${font Ubuntu:pixelsize=13:bold}Host : $alignr$nodename
 ${font Ubuntu:pixelsize=13:bold}Uptime : ${font Ubuntu:pixelsize=13:normal}$uptime_short
 
@@ -121,7 +122,6 @@ ${color4}${font Ubuntu:pixelsize=20:bold}DISK USAGE  ${hr 3}$color
 ${template5 / /}#
 ${template5 BACKUP_DISK /media/corentin/BACKUP_DISK}#
 ${template5 USB_MICHELC /media/corentin/USB_MICHELC}#
-${template5 USB_31Go /media/corentin/USB_31Go}#
 ${font Ubuntu:pixelsize=11:bold}${if_match ${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'temperature' | cut -c18-20}>=50}${color b54}$else$color$endif#
 ${template8}${execi 10 sudo nvme smart-log /dev/nvme0 | grep 'temperature' | cut -c18-20}°C
 ${color4}${font Ubuntu:bold:size=14}NETWORK  ${hr 3}$color
