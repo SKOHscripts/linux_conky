@@ -27,7 +27,7 @@ conky.config = {
   own_window_argb_value = 255,
   double_buffer = true,
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
-  xinerama_head = 1,
+  -- xinerama_head = 1,
 
   border_inner_margin = 5,
   border_outer_margin = 0,
@@ -84,11 +84,11 @@ ${font Ubuntu:pixelsize=13:bold}Uptime : ${font Ubuntu:pixelsize=13:normal}$upti
 
 ${font Ubuntu:pixelsize=11:bold}${color0}· BATTERY · $alignc${color1}${font Ubuntu:pixelsize=10}${battery_time}#
 ${if_match ${battery_percent BAT0}<=20}${color b54}\
-${else}${if_match ${battery_percent BAT0} ==100}${color2}${endif}\
+${else}${if_match ${battery_percent BAT0} >=80}${color2}${endif}\
 ${endif}#
 ${template8}${battery_percent}%$font$color
 ${if_match ${battery_percent BAT0}<=20}${color b54}${battery_bar 7}\
-${else}${if_match ${battery_percent BAT0} ==100}${color2}${battery_bar 7}${endif}\
+${else}${if_match ${battery_percent BAT0} >=80}${color2}${battery_bar 7}${endif}\
 ${battery_bar 7}
 ${endif}#
 
