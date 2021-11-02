@@ -22,7 +22,7 @@ conky.config = {
   own_window = true,
   own_window_transparent = true,
   own_window_class = 'Conky',
-  own_window_type = 'dock',
+  own_window_type = 'desktop',
   own_window_argb_visual = true,
   own_window_argb_value = 255,
   double_buffer = true,
@@ -84,11 +84,11 @@ ${font Ubuntu:pixelsize=13:bold}Uptime : ${font Ubuntu:pixelsize=13:normal}$upti
 
 ${font Ubuntu:pixelsize=11:bold}${color0}· BATTERY · $alignc${color1}${font Ubuntu:pixelsize=10}${battery_time}#
 ${if_match ${battery_percent BAT0}<=20}${color b54}\
-${else}${if_match ${battery_percent BAT0} >=80}${color2}${endif}\
+${else}${if_match ${battery_percent BAT0} >=75}${color2}${endif}\
 ${endif}#
 ${template8}${battery_percent}%$font$color
 ${if_match ${battery_percent BAT0}<=20}${color b54}${battery_bar 7}\
-${else}${if_match ${battery_percent BAT0} >=80}${color2}${battery_bar 7}${endif}\
+${else}${if_match ${battery_percent BAT0} >=75}${color2}${battery_bar 7}${endif}\
 ${battery_bar 7}
 ${endif}#
 
@@ -102,10 +102,6 @@ ${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C$color
 #${font Ubuntu:pixelsize=11:bold}${cpu cpu1}%   ${cpubar cpu1 7,80} $alignr${cpu cpu2}%   ${cpubar cpu2 7,80}
 #${font Ubuntu:pixelsize=11:bold}${cpu cpu3}%   ${cpubar cpu3 7,80} $alignr${cpu cpu4}%   ${cpubar cpu4 7,80}
 
-${font Ubuntu:pixelsize=13:bold}${execi 1000 nvidia-smi -q | grep "Product Name" | cut -c45-60}\
-${font Ubuntu:pixelsize=11:bold}$alignc${exec nvidia-smi -q | grep Gpu | cut -c45-46}%\
-${font Ubuntu:pixelsize=11:bold}${template8}${if_match ${nvidia temp}>=70}${color b54}$else$color$endif#
-${template8}${nvidia temp}°C
 ${color4}${font Ubuntu:pixelsize=20:bold}MEMORY  ${hr 3}$color
 ${font Ubuntu:pixelsize=11:bold}${color0}· RAM · $alignc${color1}${font Ubuntu:pixelsize=10}$mem / $memmax#
 ${if_match ${memperc}>=75}${color b54}$else$color$endif#
@@ -132,7 +128,6 @@ ${font Ubuntu:pixelsize=13:bold}Local IPs :${font Ubuntu:pixelsize=13:normal}${a
 ${else}\
 ${font Ubuntu:pixelsize=13:bold}No Connection${endif}
 ${font Ubuntu:pixelsize=13:bold}WIFI : Down: ${font Ubuntu:pixelsize=13:normal}${downspeed wlo1}  ${font Ubuntu:pixelsize=13:bold}${alignr}Up: ${font Ubuntu:pixelsize=13:normal}${upspeed wlo1}
-${font Ubuntu:pixelsize=13:bold}VPN : ${font Ubuntu:pixelsize=11:normal}${texeci 30  protonvpn s | head -n 1 | cut -f2 -d ':' | tr -d ' '} ${texeci 30 protonvpn s | awk '/#/{print}' | cut -f2 -d ':' | tr -d ' '} ${texeci 30 protonvpn s | awk '/Protocol/{print}' | cut -f2 -d ':' | tr -d ' '}
 ${downspeedgraph wlo1 40,140 A9A9A9} ${alignr}${upspeedgraph wlo1 40,140 A9A9A9}
 ${font Ubuntu:pixelsize=13:bold}Today ${goto 180}Month
 ${font Ubuntu:pixelsize=11:normal}${execi 300 vnstat -i wlo1+enp3s0 | grep "today" | awk '{print "R: "$2" "$3" / T: "$5" "$6}'} ${goto 180}${execi 300 vnstat -i wlo1+enp3s0 -m | grep "`date +"%Y-%m"`" | awk '{print "R:"$2" "$3" / T: "$5" "$6}'}
