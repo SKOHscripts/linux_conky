@@ -1,8 +1,8 @@
 # my conky configuration
 
-![Creative Commons](cc.png)
-
-Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+[![support](
+https://brianmacdonald.github.io/Ethonate/svg/eth-support-blue.svg)](
+https://brianmacdonald.github.io/Ethonate/address#0xEDa4b087fac5faa86c43D0ab5EfCa7C525d475C2)
 
 Here is my "conkyrc" file that I use for my gnome desktop with Ubuntu. I gleaned information here and there to write it down.
 This page references all possible commands:<a href="http://conky.sourceforge.net/variables.html">http://conky.sourceforge.net/variables.html</a>
