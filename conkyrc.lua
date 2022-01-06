@@ -97,10 +97,9 @@ ${font Ubuntu:pixelsize=13:bold}${execi 1000 grep model /proc/cpuinfo | cut -d :
 ${font Ubuntu:pixelsize=13:bold}${cpugraph 50,300 $color cpu}
 $color3${voffset -47}${font Ubuntu:pixelsize=11:bold}${freq_g}Ghz$alignc${cpu cpu}%${if_match ${exec sensors | grep 'Core 0' | cut -c17-18}>=80}${color b54}$else$color3$endif#
 ${template8}${exec sensors | grep 'Core 0' | cut -c17-18}°C$color
-
-
 #${font Ubuntu:pixelsize=11:bold}${cpu cpu1}%   ${cpubar cpu1 7,80} $alignr${cpu cpu2}%   ${cpubar cpu2 7,80}
 #${font Ubuntu:pixelsize=11:bold}${cpu cpu3}%   ${cpubar cpu3 7,80} $alignr${cpu cpu4}%   ${cpubar cpu4 7,80}
+
 
 ${color4}${font Ubuntu:pixelsize=20:bold}MEMORY  ${hr 3}$color
 ${font Ubuntu:pixelsize=11:bold}${color0}· RAM · $alignc${color1}${font Ubuntu:pixelsize=10}$mem / $memmax#
@@ -132,7 +131,7 @@ ${downspeedgraph wlo1 40,140 A9A9A9} ${alignr}${upspeedgraph wlo1 40,140 A9A9A9}
 ${font Ubuntu:pixelsize=13:bold}Today ${goto 180}Month
 ${font Ubuntu:pixelsize=11:normal}${execi 300 vnstat -i wlo1+enp3s0 | grep "today" | awk '{print "R: "$2" "$3" / T: "$5" "$6}'} ${goto 180}${execi 300 vnstat -i wlo1+enp3s0 -m | grep "`date +"%Y-%m"`" | awk '{print "R:"$2" "$3" / T: "$5" "$6}'}
 ${color4}${font Ubuntu:pixelsize=20:bold}TOP PROCESSES  ${hr 3}$color
-${font Ubuntu:pixelsize=16:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
+${font Ubuntu:pixelsize=13:bold}NAME $alignr PID    CPU    MEM ${font Ubuntu:pixelsize=13:normal}
  1.${goto 30}${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
  2.${goto 30}${top name 2} $alignr ${top pid 2} ${top cpu 2}% ${top mem 2}%
  3.${goto 30}${top name 3} $alignr ${top pid 3} ${top cpu 3}% ${top mem 3}%
